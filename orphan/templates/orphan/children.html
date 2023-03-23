@@ -1,0 +1,33 @@
+{% extends 'orphan/base.html' %}
+
+{% block title %}List of Children{% endblock %}
+
+{% block content %}
+<br><br><br>
+  <h1>List of Children</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Date of Admission</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for child in children %}
+        <tr>
+          <td>{{ child.full_name }}</td>
+          <td>{{ child.age }}</td>
+          <td>{{ child.gender }}</td>
+          <td>{{ child.admission_date|date:"M d, Y" }}</td>
+          <td>
+            <a href="{% url 'edit_child' child.id %}" class="btn btn-sm btn-primary">Edit</a>
+            <a href="{% url 'delete_child' child.id %}" class="btn btn-sm btn-danger">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

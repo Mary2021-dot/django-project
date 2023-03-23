@@ -1,0 +1,16 @@
+<!-- delete_child.html -->
+
+{% extends 'orphan/base.html' %}
+
+{% block title %}Delete Child{% endblock %}
+
+{% block content %}
+<br><br><br>
+  <h1>Delete Child</h1>
+  <p>Are you sure you want to delete {{ child.full_name }}?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
+    <a href="{% url 'children_list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock %}

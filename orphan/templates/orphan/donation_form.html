@@ -1,0 +1,28 @@
+{% extends 'orphan/base.html' %}
+
+{% block title %}Donate{% endblock %}
+
+{% block content %}
+<br><br><br>
+  <h1>Donate the little you have</h1>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="name" name="name" value="{{ donor.name }}" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" name="email" value="{{ donor.email }}" required>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number:</label>
+      <input type="text" class="form-control" id="phone" name="phone" value="{{ donor.phone }}" required>
+    </div>
+    <div class="form-group">
+      <label for="amount">Amount Donated:</label>
+      <input type="number" class="form-control" id="amount" name="amount" value="{{ donor.amount_donated }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Donate</button>
+  </form>
+{% endblock %}
