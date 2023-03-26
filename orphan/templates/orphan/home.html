@@ -1,51 +1,166 @@
 {% extends 'orphan/base.html' %}
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<head>
+	<title>Bootstrap Slideshow</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<body style="background-image: url('/static/images/background.jpg'); background-size: cover;">   
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+ 
 
 {% block content %}
 <br><br><br>
 <!-- home.html -->
 
 
-    <div class="jumbotron">
-        <h1>Welcome to our orphanage</h1>
-        <p class="lead">We provide a safe and loving home for children in need.</p>
-    </div>
-    
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Latest Children</h2>
-            {% for child in children %}
-                <div class="media">
-                    <img class="mr-3" src="{{ child.photo.url }}" alt="{{ child.name }}">
-                    <div class="media-body">
-                        <h5 class="mt-0">{{ child.name }}</h5>
-                        <p>{{ child.bio }}</p>
-                    </div>
-                </div>
-            {% empty %}
-                <p>No children found.</p>
-            {% endfor %}
+   
+
+    <div class="slideshow-container">
+        <div class="slideshow-slide">
+          <img src="{% static 'images/background.jpg'%}">
+          <div class="slideshow-text">
+            <h1>Welcome to our orphanage</h1>
+            <p class="lead">We provide a safe and loving home for children in need.</p>
+            <a href="donate_view" class="button">Donate</a>
+
+
+          </div>
         </div>
+        <div class="slideshow-slide">
+          <img src="{% static 'images/2.jpg'%}">
+          <div class="slideshow-text">
+            
+            
+                <h1>Welcome to our orphanage</h1>
+                <p class="lead">We provide a safe and loving home for children in need.</p>
+                <a href="donate_view" class="button">Donate</a>
+            
+          </div>
+        </div>
+        <div class="slideshow-slide">
+          <img src="{% static 'images/1.jpg'%}">
+          <div class="slideshow-text">
+            <h1>Welcome to our orphanage</h1>
+            <p class="lead">We provide a safe and loving home for children in need.</p>
+            <a href="donate_view" class="button">Donate</a>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="aboutus">
+        <h2>About Us</h2>
+        <p>Welcome to IMANI Orphanage, a non-profit organization dedicated to providing care and support to children in need. Since our founding in 1995, we have helped thousands of children by providing them with education, healthcare, and other support services.</p>
+        <p>Our team of dedicated staff members and volunteers work tirelessly to ensure that every child in our care receives the support and resources they need to thrive. We believe that every child deserves a safe and loving environment in which to grow and develop, and we are committed to making that a reality for as many children as possible.</p>
+        <p>Thank you for your interest in our organization, and we hope that you will consider supporting our efforts to provide care and support to children in need.</p>
+        <br><br><br>
+        <h3>Our Team</h3>
+        <div class="staff">
+          <div class="row">
+            <div class="column">
+              <img src="{% static 'images/director.jpg' %}" alt="Director">
+              <h4>John Doe</h4>
+              <p>Director</p>
+            </div>
+            <div class="column">
+              <img src="{% static 'images/admin.jpg' %}" alt="Administrator">
+              <h4>Jane Smith</h4>
+              <p>Administrator</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column">
+              <img src="{% static 'images/social-worker.jpg' %}" alt="Social Worker">
+              <h4>Emily Jones</h4>
+              <p>Social Worker</p>
+            </div>
+            <div class="column">
+              <img src="{% static 'images/teacher.jpg' %}" alt="Teacher">
+              <h4>David Lee</h4>
+              <p>Teacher</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="services">
+        <h2>Programs and Services</h2>
+        <p>Our orphanage offers a range of programs and services to support the physical, emotional, and educational needs of our children.</p>
         
-        <div class="col-md-6">
-            <h2>Latest Donations</h2>
-            {% for donation in donations %}
-                <div class="media">
-                    <img class="mr-3" src="{{ donation.photo.url }}" alt="{{ donation.name }}">
-                    <div class="media-body">
-                        <h5 class="mt-0">{{ donation.name }}</h5>
-                        <p>{{ donation.message }}</p>
-                    </div>
-                </div>
-            {% empty %}
-                <p>No donations found.</p>
-            {% endfor %}
+        <h3>Education</h3>
+        <img src="{% static 'images/education.jpg' %}" alt="Education">
+        <p>We provide our children with a quality education, from preschool to high school. Our teachers are dedicated to helping each child reach their full potential and develop a love of learning.</p>
+        
+        <h3>Healthcare</h3>
+        <img src="{% static 'images/healthcare.jpg' %}" alt="Healthcare">
+        <p>We believe that good health is essential to a happy and productive life. That's why we provide our children with comprehensive healthcare, including regular checkups, vaccinations, and dental care.</p>
+        
+        <h3>Counseling</h3>
+        <img src="{% static 'images/counseling.jpg' %}" alt="Counseling">
+        <p>We understand that many of our children have experienced trauma and loss. That's why we offer counseling services to help them heal and cope with their emotions.</p>
+        
+        <h3>Other Support Services</h3>
+        <img src="{% static 'images/support.jpg' %}" alt="Support Services">
+        <p>We offer a range of other support services, including:</p>
+        <ul>
+          <li>Recreational activities to promote physical fitness and socialization</li>
+          <li>Vocational training to help older children develop practical skills for future employment</li>
+          <li>Family reunification services for children who have a living parent or relative who can care for them</li>
+        </ul>
+      </div>
+
+
+    
+    
+      <section class="success-stories">
+        <h2>Success Stories</h2>
+        <p>At our orphanage, we are proud to have helped many children overcome difficult circumstances and achieve their dreams. Here are just a few of their stories:</p>
+        <div class="story">
+          <h3>John's Story</h3>
+          <img src="{% static 'images/john.jpeg' %}" alt="John">
+          <p>John was abandoned by his parents at a young age and left to fend for himself on the streets. He was malnourished and had never attended school. When he came to our orphanage, we provided him with food, shelter, and education. With hard work and dedication, John excelled in school and went on to attend college. He now works as a successful engineer and is grateful for the opportunities that our orphanage provided him.</p>
         </div>
-    </div>
+        <div class="story">
+          <h3>Sarah's Story</h3>
+          <img src="{% static 'images/sarah.jpeg' %}" alt="Sarah">
+          <p>Sarah's parents were killed in a car accident when she was just six years old. She was taken in by her grandparents, but they struggled to provide for her. When Sarah came to our orphanage, she was shy and withdrawn. With the help of our counselors, she was able to work through her grief and become a confident and outgoing young woman. Sarah is now pursuing a degree in social work and hopes to help other children who have experienced loss and trauma.</p>
+        </div>
+      </section>
+      
+      <section class="donations">
+        <h2>Donations</h2>
+        <p>We rely on the generosity of donors to provide our children with the support and care they need. Your donation can make a real difference in the lives of these children.</p>
+        <p>To make a donation, please visit our <a href="{% url 'donate_view' %}">donation page</a>. All donations are tax-deductible and will be used to provide food, shelter, education, healthcare, and other support services to our children.</p>
+      </section>
+      
+      
+
+      
+       
+      
+      
+    <script>
+        var slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  var slides = document.getElementsByClassName("slideshow-slide");
+  var dots = document.getElementsByClassName("slideshow-dot");
+  for (var i = 0; i < slides.length; i++) {
+    slides[i].classList.remove("active");
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {
+    slideIndex = 1;
+  }
+  slides[slideIndex-1].classList.add("active");
+  setTimeout(showSlides, 5000);
+}
+
+    </script>
+    
+   
 {% endblock %}
 </body>
 

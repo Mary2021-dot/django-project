@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Child,Donor,ContactMessage,Event,Donation
+from .models import Child,Donor,ContactMessage,Event
 
 @admin.register(Child)
 class ChildAdmin(admin.ModelAdmin):
@@ -12,5 +12,5 @@ class ChildAdmin(admin.ModelAdmin):
 admin.site.register(Donor)
 admin.site.register(ContactMessage)
 admin.site.register(Event)
-admin.site.register(Donation)
+
 

@@ -59,11 +59,22 @@ class CustomLoginForm(AuthenticationForm):
 
 from django import forms
 
-class DonationForm(forms.Form):
-    name = forms.CharField(max_length=100)
-    email = forms.EmailField()
-    phone = forms.CharField(max_length=20)
-    amount = forms.DecimalField(max_digits=10, decimal_places=2)
+from django import forms
+from .models import Donation
+
+
+
+class DonationForm(forms.ModelForm):
+    class Meta:
+        model = Donation
+        fields = ['name', 'email', 'amount']
+
+    def save(self, commit=True):
+        donation = super().save(commit=False)
+        if commit:
+            donation.save()
+        return donation
+
 
 
 

@@ -15,7 +15,8 @@ def home(request):
     children = Child.objects.order_by('-created_at')[:3]
     
     # Retrieve the latest 3 donations made to the orphanage
-    donations = Donation.objects.order_by('-created_at')[:3]
+    donations = Donation.objects.order_by('-id')[:3]
+
     
     context = {
         'children': children,
@@ -33,46 +34,10 @@ def navbar(request):
 def footer(request):
     return render(request, 'orphan/footer.html')
 
+def about(request):
+    return render(request, 'orphan/about.html')
 
 
-
-def children_list(request):
-    children = Child.objects.all()
-    context = {'children': children}
-    return render(request, 'orphan/children.html', context)
-
-
-
-
-
-def edit_child(request, id):
-    child = Child.objects.get(id=id)
-    if request.method == 'POST':
-        form = EditChildForm(request.POST, request.FILES, instance=child)
-        if form.is_valid():
-            form.save()
-            return redirect('children')
-    else:
-        form = EditChildForm(instance=child)
-    return render(request, 'orphan/edit_child.html', {'form': form})
-
-
-from .forms import DeleteChildForm
-
-class DeleteChildView(View):
-    def get(self, request, id):
-        child = get_object_or_404(Child, id=id)
-        form = DeleteChildForm()
-        return render(request, 'orphan/delete_child.html', {'child': child, 'form': form})
-
-    def post(self, request, id):
-        child = get_object_or_404(Child, id=id)
-        form = DeleteChildForm(request.POST)
-        if form.is_valid(): # check if form is valid first
-            if form.cleaned_data['confirmation']:
-                child.delete()
-                return redirect('children_list')
-        return render(request, 'orphan/delete_child.html', {'child': child, 'form': form})
 
 
 from .forms import DonorForm
@@ -142,6 +107,8 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.set_password(user.password)
+            user.save()
             # log in the user
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
@@ -163,19 +130,21 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 
 def login(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
-                login(request, user)
-                # redirect to home page
-                return redirect('/donation_form/')
-    else:
-        form = AuthenticationForm()
-    return render(request, 'orphan/login.html', {'form': form})
+                # login(request, user)
+                return HttpResponseRedirect('/donation_form/') 
+            else:
+                messages.error(request, "invalid details")
+
+    form = AuthenticationForm()
+
+    return render(request, 'orphan/login.html', context={"form": form})
 
 
 
@@ -195,19 +164,31 @@ from django.shortcuts import render, HttpResponseRedirect, reverse
 from django.contrib.auth.decorators import login_required
 
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import DonationForm
+
 def donation_form(request):
+    form = DonationForm()
     if request.method == 'POST':
         form = DonationForm(request.POST)
         if form.is_valid():
-            donation = form.save()
-            return HttpResponseRedirect(reverse('donation_success'))
+            form.save()
+            messages.success(request, 'Thank you for your donation!')
+            return redirect('home')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    context = {'form': form}
+    return render(request, 'orphan/donation_form.html', context)
+
+
+
+
+def afterlogin_view(request):
+    if is_donor(request.user):
+        return redirect('donation_form')
     else:
-        form = DonationForm()
-    return render(request, 'orphan/donation_success.html', {'form': form})
-
-
-def donation_success(request):
-    return render(request, 'orphan/donation_success.html')
+        return redirect('error-page')
 
 
 

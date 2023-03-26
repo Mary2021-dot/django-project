@@ -64,15 +64,17 @@ from django.contrib.auth.models import User
 
      
 
+from django.db import models
+
 class Donation(models.Model):
-    donor_name = models.CharField(max_length=255)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    donation_date = models.DateField(default=date.today)
-    message = models.TextField(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    amount = models.DecimalField(max_digits=6, decimal_places=2)
+    
 
     def __str__(self):
-        return f'{self.donor_name} donated {self.amount}'
+        return self.name
+
 
 
 
